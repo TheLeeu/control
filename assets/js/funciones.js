@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Obtener el contenedor con id 'form_salida'
   const formSalida = document.getElementById('form_salida');
   const formMovimiento = document.getElementById('form_movimiento');
+  const formGasolina = document.getElementById('form_gasolina');
 
   // Categorias de salida
 
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Buscar el elemento con id 'categoria' dentro de 'form_salida'
   const lugarElement = formSalida.querySelector('#lugar');
+  const lugarGasolinaElement = formGasolina.querySelector('#lugar');
   const lugarOrigenMovimientoElement = formMovimiento.querySelector('#lugar_origen');
   const lugarDestinoMovimientoElement = formMovimiento.querySelector('#lugar_destino');
 
@@ -83,6 +85,11 @@ document.addEventListener('DOMContentLoaded', function () {
     option3.value = optionData.id_lugar;
     option3.textContent = optionData.lugar;
     lugarDestinoMovimientoElement.appendChild(option3);
+
+    const option4 = document.createElement('option');
+    option4.value = optionData.id_lugar;
+    option4.textContent = optionData.lugar;
+    lugarGasolinaElement.appendChild(option4);
   });
 
   // Dinero
@@ -93,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Buscar el elemento con id 'categoria' dentro de 'form_salida'
   const dineroElement = formSalida.querySelector('#dinero');
+  const dineroGasolinaElement = formGasolina.querySelector('#dinero');
   const dineroOrigenElement = formMovimiento.querySelector('#dinero_origen');
   const dineroDestinoElement = formMovimiento.querySelector('#dinero_destino');
 
@@ -115,6 +123,11 @@ document.addEventListener('DOMContentLoaded', function () {
     option3.value = optionData.id_dinero;
     option3.textContent = optionData.estado;
     dineroDestinoElement.appendChild(option3);
+
+    const option4 = document.createElement('option');
+    option4.value = optionData.id_dinero;
+    option4.textContent = optionData.estado;
+    dineroGasolinaElement.appendChild(option4);
   });
 
   document.getElementById('form_salida').addEventListener('submit', async function (event) {
@@ -159,6 +172,34 @@ document.addEventListener('DOMContentLoaded', function () {
     // Llamar a la función asincrónica
     await enviarMensaje(mensaje);
     await enviarMensaje(mensaje2);
+
+    // Recargar la página después de que el mensaje se haya enviado
+    window.location.reload();
+  });
+
+  document.getElementById('form_gasolina').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+
+    const form = document.getElementById('form_gasolina');
+
+    // Capturar los valores de los campos
+    const monto = form.querySelector('#monto').value;
+    const descripcion = 'gasolina';
+    const categoria = 16;
+    const lugar = form.querySelector('#lugar').value;
+    const dinero = form.querySelector('#dinero').value;
+    const kilometros = form.querySelector('#kilometros').value;
+    const galones = form.querySelector('#galones').value;
+
+    const calculo = kilometros / galones;
+
+    await enviarMensaje(`k/g: ${calculo}`);
+
+    // Formatear el mensaje en el formato solicitado
+    const mensaje = `gasolina|${kilometros},${galones},${monto},${descripcion},${categoria},${dinero},${lugar}`;
+
+    // Llamar a la función asincrónica
+    await enviarMensaje(mensaje);
 
     // Recargar la página después de que el mensaje se haya enviado
     window.location.reload();
