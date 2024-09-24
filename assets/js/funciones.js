@@ -34,10 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const formSalida = document.getElementById('form_salida');
   const formMovimiento = document.getElementById('form_movimiento');
   const formGasolina = document.getElementById('form_gasolina');
+  const formEntrada = document.getElementById('form_entrada');
 
   // Categorias de salida
-
-  // Obtener el string JSON de la propiedad 'text'
   let textString = `[{"id_categoria":"19","nombre":"Agua","id_movimiento":"3"},{"id_categoria":"4","nombre":"Amor","id_movimiento":"3"},{"id_categoria":"3","nombre":"Comida casa","id_movimiento":"3"},{"id_categoria":"15","nombre":"Comida fuera","id_movimiento":"3"},{"id_categoria":"7","nombre":"Estudio","id_movimiento":"3"},{"id_categoria":"16","nombre":"Gasolina","id_movimiento":"3"},{"id_categoria":"14","nombre":"Golosinas","id_movimiento":"3"},{"id_categoria":"1","nombre":"Internet","id_movimiento":"3"},{"id_categoria":"8","nombre":"jabones y limpieza","id_movimiento":"3"},{"id_categoria":"2","nombre":"Luz","id_movimiento":"3"},{"id_categoria":"10","nombre":"movimiento salida","id_movimiento":"3"},{"id_categoria":"6","nombre":"Personal","id_movimiento":"3"},{"id_categoria":"17","nombre":"repuestos y mantenimientos","id_movimiento":"3"},{"id_categoria":"18","nombre":"Ropa","id_movimiento":"3"},{"id_categoria":"11","nombre":"Transporte","id_movimiento":"3"}]`;
 
   // Parsear el string JSON a un array de objetos
@@ -54,6 +53,23 @@ document.addEventListener('DOMContentLoaded', function () {
     categoriaElement.appendChild(option);  // Añadir la opción al select
   });
 
+  // Categoria de entrada
+  textString = `[{"id_categoria":"5","nombre":"mama","id_movimiento":"2"},{"id_categoria":"9","nombre":"movimiento entrada","id_movimiento":"2"},{"id_categoria":"13","nombre":"otro ingreso","id_movimiento":"2"},{"id_categoria":"12","nombre":"trabajo","id_movimiento":"2"}]`;
+
+  // Parsear el string JSON a un array de objetos
+  parsedData = JSON.parse(textString);
+
+  // Buscar el elemento con id 'categoria' dentro de 'form_salida'
+  const categoriaEntradaElement = formEntrada.querySelector('#categoria');
+
+  // Crear opciones para el select
+  parsedData.forEach(optionData => {
+    const option = document.createElement('option');
+    option.value = optionData.id_categoria;  // Asignar el id como valor de la opción
+    option.textContent = optionData.nombre;  // Asignar el texto a mostrar
+    categoriaEntradaElement.appendChild(option);  // Añadir la opción al select
+  });
+
   // Lugar
   textString = `[{"id_lugar":"3","lugar":"Efectivo"},{"id_lugar":"4","lugar":"Chivo Wallet"},{"id_lugar":"2","lugar":"Banco"}]`;
 
@@ -62,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Buscar el elemento con id 'categoria' dentro de 'form_salida'
   const lugarElement = formSalida.querySelector('#lugar');
+  const lugarEntradaElement = formEntrada.querySelector('#lugar');
   const lugarGasolinaElement = formGasolina.querySelector('#lugar');
   const lugarOrigenMovimientoElement = formMovimiento.querySelector('#lugar_origen');
   const lugarDestinoMovimientoElement = formMovimiento.querySelector('#lugar_destino');
@@ -90,6 +107,11 @@ document.addEventListener('DOMContentLoaded', function () {
     option4.value = optionData.id_lugar;
     option4.textContent = optionData.lugar;
     lugarGasolinaElement.appendChild(option4);
+
+    const option5 = document.createElement('option');
+    option5.value = optionData.id_lugar;
+    option5.textContent = optionData.lugar;
+    lugarEntradaElement.appendChild(option5);
   });
 
   // Dinero
@@ -100,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Buscar el elemento con id 'categoria' dentro de 'form_salida'
   const dineroElement = formSalida.querySelector('#dinero');
+  const dineroEntradaElement = formEntrada.querySelector('#dinero');
   const dineroGasolinaElement = formGasolina.querySelector('#dinero');
   const dineroOrigenElement = formMovimiento.querySelector('#dinero_origen');
   const dineroDestinoElement = formMovimiento.querySelector('#dinero_destino');
@@ -128,6 +151,33 @@ document.addEventListener('DOMContentLoaded', function () {
     option4.value = optionData.id_dinero;
     option4.textContent = optionData.estado;
     dineroGasolinaElement.appendChild(option4);
+
+    const option5 = document.createElement('option');
+    option5.value = optionData.id_dinero;
+    option5.textContent = optionData.estado;
+    dineroEntradaElement.appendChild(option5);
+  });
+
+  document.getElementById('form_entrada').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+
+    const form = document.getElementById('form_entrada');
+
+    // Capturar los valores de los campos
+    const monto = form.querySelector('#monto').value;
+    const descripcion = form.querySelector('#descripcion').value;
+    const categoria = form.querySelector('#categoria').value;
+    const lugar = form.querySelector('#lugar').value;
+    const dinero = form.querySelector('#dinero').value;
+
+    // Formatear el mensaje en el formato solicitado
+    const mensaje = `${monto},${descripcion},${categoria},${dinero},${lugar}`;
+
+    // Llamar a la función asincrónica
+    await enviarMensaje(mensaje);
+
+    // Recargar la página después de que el mensaje se haya enviado
+    window.location.reload();
   });
 
   document.getElementById('form_salida').addEventListener('submit', async function (event) {
