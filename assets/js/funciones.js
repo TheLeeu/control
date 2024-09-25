@@ -162,6 +162,14 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
     const form = document.getElementById('form_entrada');
+    const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
+
+    // Deshabilitar el botón de submit y mostrar el spinner
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enviando...
+    `;
 
     // Capturar los valores de los campos
     const monto = form.querySelector('#monto').value;
@@ -173,17 +181,32 @@ document.addEventListener('DOMContentLoaded', function () {
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto},${descripcion},${categoria},${dinero},${lugar}`;
 
-    // Llamar a la función asincrónica
-    await enviarMensaje(mensaje);
+    try {
+      // Llamar a la función asincrónica
+      await enviarMensaje(mensaje);
 
-    // Recargar la página después de que el mensaje se haya enviado
-    window.location.reload();
+      // Recargar la página después de que el mensaje se haya enviado
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      // Volver a habilitar el botón si algo falla
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar';
+    }
   });
 
   document.getElementById('form_salida').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
     const form = document.getElementById('form_salida');
+    const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
+
+    // Deshabilitar el botón de submit y mostrar el spinner
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enviando...
+    `;
 
     // Capturar los valores de los campos
     const monto = form.querySelector('#monto').value;
@@ -195,17 +218,32 @@ document.addEventListener('DOMContentLoaded', function () {
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto},${descripcion},${categoria},${dinero},${lugar}`;
 
-    // Llamar a la función asincrónica
-    await enviarMensaje(mensaje);
+    try {
+      // Llamar a la función asincrónica
+      await enviarMensaje(mensaje);
 
-    // Recargar la página después de que el mensaje se haya enviado
-    window.location.reload();
+      // Recargar la página después de que el mensaje se haya enviado
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      // Volver a habilitar el botón si algo falla
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar';
+    }
   });
 
   document.getElementById('form_movimiento').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
     const form = document.getElementById('form_movimiento');
+    const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
+
+    // Deshabilitar el botón de submit y mostrar el spinner
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enviando...
+    `;
 
     // Capturar los valores de los campos
     const monto = form.querySelector('#monto').value;
@@ -219,18 +257,33 @@ document.addEventListener('DOMContentLoaded', function () {
     // entrada
     const mensaje2 = `${monto},${descripcion},9,${dinero_destino},${lugar_destino}`;
 
-    // Llamar a la función asincrónica
-    await enviarMensaje(mensaje);
-    await enviarMensaje(mensaje2);
+    try {
+      // Llamar a la función asincrónica
+      await enviarMensaje(mensaje);
+      await enviarMensaje(mensaje2);
 
-    // Recargar la página después de que el mensaje se haya enviado
-    window.location.reload();
+      // Recargar la página después de que el mensaje se haya enviado
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      // Volver a habilitar el botón si algo falla
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar';
+    }
   });
 
   document.getElementById('form_gasolina').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
     const form = document.getElementById('form_gasolina');
+    const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
+
+    // Deshabilitar el botón de submit y mostrar el spinner
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enviando...
+    `;
 
     // Capturar los valores de los campos
     const monto = form.querySelector('#monto').value;
@@ -243,16 +296,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const calculo = kilometros / galones;
 
-    await enviarMensaje(`k/g: ${calculo}`);
+    try {
+      await enviarMensaje(`k/g: ${calculo}`);
 
-    // Formatear el mensaje en el formato solicitado
-    const mensaje = `gasolina|${kilometros},${galones},${monto},${descripcion},${categoria},${dinero},${lugar}`;
+      // Formatear el mensaje en el formato solicitado
+      const mensaje = `gasolina|${kilometros},${galones},${monto},${descripcion},${categoria},${dinero},${lugar}`;
 
-    // Llamar a la función asincrónica
-    await enviarMensaje(mensaje);
+      // Llamar a la función asincrónica
+      await enviarMensaje(mensaje);
 
-    // Recargar la página después de que el mensaje se haya enviado
-    window.location.reload();
+      // Recargar la página después de que el mensaje se haya enviado
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      // Volver a habilitar el botón si algo falla
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar';
+    }
   });
 
 });
