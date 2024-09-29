@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dinero = form.querySelector('#dinero').value;
 
     // Formatear el mensaje en el formato solicitado
-    const mensaje = `${monto},${descripcion},${categoria},${dinero},${lugar}`;
+    const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
     try {
       // Llamar a la función asincrónica
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dinero = form.querySelector('#dinero').value;
 
     // Formatear el mensaje en el formato solicitado
-    const mensaje = `${monto},${descripcion},${categoria},${dinero},${lugar}`;
+    const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
     try {
       // Llamar a la función asincrónica
@@ -253,9 +253,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const dinero_destino = form.querySelector('#dinero_destino').value;
     const lugar_destino = form.querySelector('#lugar_destino').value;
     // Formatear el mensaje en el formato solicitado salida
-    const mensaje = `${monto},${descripcion},10,${dinero_origen},${lugar_origen}`;
+    const mensaje = `${monto};${descripcion};10;${dinero_origen};${lugar_origen}`;
     // entrada
-    const mensaje2 = `${monto},${descripcion},9,${dinero_destino},${lugar_destino}`;
+    const mensaje2 = `${monto};${descripcion};9;${dinero_destino};${lugar_destino}`;
 
     try {
       // Llamar a la función asincrónica
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
       await enviarMensaje(`k/g: ${calculo}`);
 
       // Formatear el mensaje en el formato solicitado
-      const mensaje = `gasolina|${kilometros},${galones},${monto},${descripcion},${categoria},${dinero},${lugar}`;
+      const mensaje = `gasolina|${kilometros};${galones};${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
       // Llamar a la función asincrónica
       await enviarMensaje(mensaje);
