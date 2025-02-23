@@ -1,3 +1,28 @@
+const TRANSACCIONES = 'transaccionesArray';
+
+function getTransaccionesStorage() {
+  // Verificar si la clave existe en localStorage
+  let transaccionesStorage = localStorage.getItem(TRANSACCIONES);
+
+  if (!transaccionesStorage) {
+    transaccionesStorage = [];
+  } else {
+    transaccionesStorage = JSON.parse(transaccionesStorage);
+  }
+
+  return transaccionesStorage;
+}
+
+function setTransaccionesStorage(transaccionArray) {
+  let transacciones = getTransaccionesStorage();
+
+  transacciones.push(transaccionArray);
+
+  transacciones = JSON.stringify(transacciones);
+
+  localStorage.setItem(TRANSACCIONES, transacciones);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
   // Referencias a los inputs de configuración
@@ -158,6 +183,36 @@ document.addEventListener('DOMContentLoaded', function () {
     dineroEntradaElement.appendChild(option5);
   });
 
+  document.getElementById('enviarBtn').addEventListener('click', async function (event) {
+    const submitBtn = document.getElementById('enviarBtn'); // Seleccionar el botón de submit desde el formulario
+
+    // Deshabilitar el botón de submit y mostrar el spinner
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Enviando...
+    `;
+
+    try {
+      // Llamar a la función asincrónica
+      let mensaje = getTransaccionesStorage();
+      mensaje = JSON.stringify(mensaje);
+
+      await enviarMensaje(mensaje);
+
+      // reiniciar las transacciones
+      localStorage.setItem(TRANSACCIONES, '[]');
+
+      // Recargar la página después de que el mensaje se haya enviado
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      // Volver a habilitar el botón si algo falla
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Enviar';
+    }
+  });
+
   document.getElementById('form_entrada').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
@@ -181,18 +236,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
-    try {
-      // Llamar a la función asincrónica
-      await enviarMensaje(mensaje);
+    const transaccion = {
+      monto: monto,
+      descripcion: descripcion,
+      categoria: categoria,
+      dinero: dinero,
+      lugar: lugar,
+    };
 
-      // Recargar la página después de que el mensaje se haya enviado
-      window.location.reload();
-    } catch (error) {
-      console.error('Error al enviar el mensaje:', error);
-      // Volver a habilitar el botón si algo falla
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Enviar';
-    }
+    setTransaccionesStorage(transaccion);
+    window.location.reload();
+
+    // try {
+    //   // Llamar a la función asincrónica
+    //   await enviarMensaje(mensaje);
+
+    //   // Recargar la página después de que el mensaje se haya enviado
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.error('Error al enviar el mensaje:', error);
+    //   // Volver a habilitar el botón si algo falla
+    //   submitBtn.disabled = false;
+    //   submitBtn.innerHTML = 'Enviar';
+    // }
   });
 
   document.getElementById('form_salida').addEventListener('submit', async function (event) {
@@ -218,18 +284,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
-    try {
-      // Llamar a la función asincrónica
-      await enviarMensaje(mensaje);
+    const transaccion = {
+      monto: monto,
+      descripcion: descripcion,
+      categoria: categoria,
+      dinero: dinero,
+      lugar: lugar,
+    };
 
-      // Recargar la página después de que el mensaje se haya enviado
-      window.location.reload();
-    } catch (error) {
-      console.error('Error al enviar el mensaje:', error);
-      // Volver a habilitar el botón si algo falla
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Enviar';
-    }
+    setTransaccionesStorage(transaccion);
+    window.location.reload();
+
+    // try {
+    //   // Llamar a la función asincrónica
+    //   await enviarMensaje(mensaje);
+
+    //   // Recargar la página después de que el mensaje se haya enviado
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.error('Error al enviar el mensaje:', error);
+    //   // Volver a habilitar el botón si algo falla
+    //   submitBtn.disabled = false;
+    //   submitBtn.innerHTML = 'Enviar';
+    // }
   });
 
   document.getElementById('form_movimiento').addEventListener('submit', async function (event) {
@@ -257,19 +334,36 @@ document.addEventListener('DOMContentLoaded', function () {
     // entrada
     const mensaje2 = `${monto};${descripcion};9;${dinero_destino};${lugar_destino}`;
 
-    try {
-      // Llamar a la función asincrónica
-      await enviarMensaje(mensaje);
-      await enviarMensaje(mensaje2);
+    setTransaccionesStorage({
+      monto: monto,
+      descripcion: descripcion,
+      categoria: 10,
+      dinero: dinero_origen,
+      lugar: lugar_origen,
+    });
 
-      // Recargar la página después de que el mensaje se haya enviado
-      window.location.reload();
-    } catch (error) {
-      console.error('Error al enviar el mensaje:', error);
-      // Volver a habilitar el botón si algo falla
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Enviar';
-    }
+    setTransaccionesStorage({
+      monto: monto,
+      descripcion: descripcion,
+      categoria: 9,
+      dinero: dinero_destino,
+      lugar: lugar_destino,
+    });
+    window.location.reload();
+
+    // try {
+    //   // Llamar a la función asincrónica
+    //   await enviarMensaje(mensaje);
+    //   await enviarMensaje(mensaje2);
+
+    //   // Recargar la página después de que el mensaje se haya enviado
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.error('Error al enviar el mensaje:', error);
+    //   // Volver a habilitar el botón si algo falla
+    //   submitBtn.disabled = false;
+    //   submitBtn.innerHTML = 'Enviar';
+    // }
   });
 
   document.getElementById('form_gasolina').addEventListener('submit', async function (event) {
