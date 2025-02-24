@@ -186,6 +186,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('enviarBtn').addEventListener('click', async function (event) {
     const submitBtn = document.getElementById('enviarBtn'); // Seleccionar el botón de submit desde el formulario
 
+    // Llamar a la función asincrónica
+    let mensaje = getTransaccionesStorage();
+
+    if (mensaje.length == 0) {
+      alert('No hay transacciones');
+      return;
+    }
+
     // Deshabilitar el botón de submit y mostrar el spinner
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
@@ -194,8 +202,6 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
 
     try {
-      // Llamar a la función asincrónica
-      let mensaje = getTransaccionesStorage();
       mensaje = JSON.stringify(mensaje);
 
       await enviarMensaje(mensaje);
