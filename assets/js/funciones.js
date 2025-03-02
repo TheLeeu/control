@@ -1,4 +1,5 @@
 const TRANSACCIONES = 'transaccionesArray';
+const fechaInput = document.getElementById('fecha');
 
 function getTransaccionesStorage() {
   // Verificar si la clave existe en localStorage
@@ -238,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoria = form.querySelector('#categoria').value;
     const lugar = form.querySelector('#lugar').value;
     const dinero = form.querySelector('#dinero').value;
+    const fecha = fechaInput.value;
 
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
@@ -248,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
       categoria: categoria,
       dinero: dinero,
       lugar: lugar,
+      fecha: fecha,
     };
 
     setTransaccionesStorage(transaccion);
@@ -286,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoria = form.querySelector('#categoria').value;
     const lugar = form.querySelector('#lugar').value;
     const dinero = form.querySelector('#dinero').value;
+    const fecha = fechaInput.value;
 
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
@@ -296,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
       categoria: categoria,
       dinero: dinero,
       lugar: lugar,
+      fecha: fecha,
     };
 
     setTransaccionesStorage(transaccion);
@@ -339,6 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const mensaje = `${monto};${descripcion};10;${dinero_origen};${lugar_origen}`;
     // entrada
     const mensaje2 = `${monto};${descripcion};9;${dinero_destino};${lugar_destino}`;
+    const fecha = fechaInput.value;
 
     setTransaccionesStorage({
       monto: monto,
@@ -346,6 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
       categoria: 10,
       dinero: dinero_origen,
       lugar: lugar_origen,
+      fecha: fecha,
     });
 
     setTransaccionesStorage({
@@ -354,6 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
       categoria: 9,
       dinero: dinero_destino,
       lugar: lugar_destino,
+      fecha: fecha,
     });
     window.location.reload();
 
