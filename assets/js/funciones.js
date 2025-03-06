@@ -408,10 +408,22 @@ document.addEventListener('DOMContentLoaded', function () {
       await enviarMensaje(`k/g: ${calculo}`);
 
       // Formatear el mensaje en el formato solicitado
-      const mensaje = `gasolina|${kilometros};${galones};${monto};${descripcion};${categoria};${dinero};${lugar}`;
+      // const mensaje = `gasolina|${kilometros};${galones};${monto};${descripcion};${categoria};${dinero};${lugar}`;
 
-      // Llamar a la función asincrónica
-      await enviarMensaje(mensaje);
+      const transaccion = {
+        gasolina: true,
+        kilometros: kilometros,
+        galones: galones,
+        monto: monto,
+        descripcion: descripcion,
+        categoria: categoria,
+        dinero: dinero,
+        lugar: lugar,
+        fecha: fecha,
+      };
+  
+      setTransaccionesStorage(transaccion);
+      window.location.reload();
 
       // Recargar la página después de que el mensaje se haya enviado
       window.location.reload();
