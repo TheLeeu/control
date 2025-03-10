@@ -223,6 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('form_entrada').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
+    const fecha = fechaInput.value || '';
+
+    if (fecha == '') {
+      alert('Falta fecha');
+      return;
+    }
+
     const form = document.getElementById('form_entrada');
     const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
 
@@ -239,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoria = form.querySelector('#categoria').value;
     const lugar = form.querySelector('#lugar').value;
     const dinero = form.querySelector('#dinero').value;
-    const fecha = fechaInput.value;
 
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
@@ -272,6 +278,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('form_salida').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+    
+    const fecha = fechaInput.value || '';
+
+    if (fecha == '') {
+      alert('Falta fecha');
+      return;
+    }
 
     const form = document.getElementById('form_salida');
     const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
@@ -289,7 +302,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoria = form.querySelector('#categoria').value;
     const lugar = form.querySelector('#lugar').value;
     const dinero = form.querySelector('#dinero').value;
-    const fecha = fechaInput.value;
 
     // Formatear el mensaje en el formato solicitado
     const mensaje = `${monto};${descripcion};${categoria};${dinero};${lugar}`;
@@ -323,6 +335,13 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('form_movimiento').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
+    const fecha = fechaInput.value || '';
+
+    if (fecha == '') {
+      alert('Falta fecha');
+      return;
+    }
+
     const form = document.getElementById('form_movimiento');
     const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
 
@@ -344,7 +363,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const mensaje = `${monto};${descripcion};10;${dinero_origen};${lugar_origen}`;
     // entrada
     const mensaje2 = `${monto};${descripcion};9;${dinero_destino};${lugar_destino}`;
-    const fecha = fechaInput.value;
 
     setTransaccionesStorage({
       monto: monto,
@@ -382,6 +400,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('form_gasolina').addEventListener('submit', async function (event) {
     event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+
+    const fecha = fechaInput.value || '';
+
+    if (fecha == '') {
+      alert('Falta fecha');
+      return;
+    }
 
     const form = document.getElementById('form_gasolina');
     const submitBtn = form.querySelector('[type="submit"]'); // Seleccionar el botón de submit desde el formulario
